@@ -8,7 +8,6 @@ services:
     entrypoint: ['/entrypoint.sh', '--default-authentication-plugin=mysql_native_password', '--group-concat-max-len=1000000']
     environment:
       MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
-      MYSQL_DATABASE: ${DATABASE}
     ports:
       - "3306:3306"
     volumes:
