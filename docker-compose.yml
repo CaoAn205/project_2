@@ -1,0 +1,68 @@
+version: '3.6'
+
+services:
+  db:
+    container_name: project_db
+    image: mysql:5.7.16
+    command: --character-set-server=utf8mb4
+    entrypoint: ['/entrypoint.sh', '--default-authentication-plugin=mysql_native_password', '--group-concat-max-len=1000000']
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_DATABASE: ${DATABASE}
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./dump:/docker-entrypoint-initdb.d
+
+  # postgres:
+  #   container_name: pg_container
+  #   image: postgres:13.3
+  #   environment:
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: postgres
+  #     POSTGRES_DB: test_db
+  #   ports:
+  #     - 5432:5432
+  #   volumes:
+  #     - .:/docker-entrypoint-initdb.d
+
+  # pgadmin:
+  #   container_name: pgadmin4_container
+  #   image: dpage/pgadmin4
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: admin@admin.com
+  #     PGADMIN_DEFAULT_PASSWORD: root
+  #   ports:
+  #     - 5050:80
+
+  web: &web_base
+    container_name: project_web
+    build: ./docker/web
+    tty: true
+    stdin_open: true
+    command: sh /docker-entrypoint.sh
+    environment:
+      RAILS_ENV: development
+      REDIS_URL: redis:6379
+      JWT_ENCODE_KEY: ZW5jb2RlX2tleQ==
+    env_file:
+      - .env
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/workspace
+      - ./docker/web/database.yml:/workspace/config/database.yml
+      - bundle_cache:/workspace/vendor/bundle
+    depends_on:
+      - db
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - 8025:8025
+
+  redis:
+    image: redis
+
+volumes:
+  bundle_cache:
