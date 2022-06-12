@@ -1,5 +1,6 @@
 class ImagesController < ApplicationController
-  def edit
-    @image = current_user.image_attachments.find(params[:id])
+  def show
+    dataset = Dataset.find(params[:dataset_id])
+    @image = dataset.images.where(user: current_user).find(params[:id])
   end
 end

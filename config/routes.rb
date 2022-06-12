@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root 'datasets#index'
 
-  resource :datasets, only: [:index, :show]
-
-  resources :images, only: [:edit]
+  resources :datasets, only: [:index, :show] do
+    resources :images, only: [:show]
+  end
 end
