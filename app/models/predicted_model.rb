@@ -1,2 +1,0 @@
-class PredictedModel < ApplicationRecord
-end
