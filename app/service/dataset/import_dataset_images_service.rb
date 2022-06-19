@@ -2,19 +2,19 @@ require 'zip'
 
 class Dataset::ImportDatasetImagesService
   class << self
-    def perform(file_path, user = User.admin.order(created_at: :asc).first)
-      ActiveRecord::Base.transaction do
-        return unless File.exists?(file_path)
+    def import!(file_path, user)
+      return unless File.exists?(file_path)
 
-        dataset = Dataset.create!(name: 'Dataset 1')
-        extract_destination = extract_file(file_path, dataset.id)
+      dataset = Dataset.create!(name: 'Dataset 1')
+      extract_destination = extract_file(file_path, dataset.id)
 
-        Dir.glob(Rails.root.join(extract_destination, 'images', '*')).each do |path|
-          image = user.images.build(dataset: dataset)
-          image.file = open(path)
-          image.save!
-        end
+      Dir.glob(Rails.root.join(extract_destination, 'images', '*')).each do |path|
+        image = user.images.build(dataset: dataset)
+        image.file = open(path)
+        image.save!
       end
+
+      dataset
     ensure
       FileUtils.rm_rf(extract_destination)
     end

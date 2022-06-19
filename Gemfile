@@ -16,6 +16,7 @@ gem 'haml-rails', '~> 2.0'
 gem 'devise', '~> 4.8.1'
 gem 'carrierwave', '~> 2.0'
 gem 'rubyzip'
+gem 'rubyXL'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
