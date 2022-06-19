@@ -5,5 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   enum role_type: %i(admin user)
-  has_many :image_attachments
+  has_many :images
+
+  scope :admin, -> { where(role_type: 'admin') }
 end
