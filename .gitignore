@@ -67,3 +67,6 @@ yarn.lock
 # Ignore uploaded files in development
 /storage/*
 !/storage/.keep
+
+# Ignore Gemfile.lock
+Gemfile.lock
