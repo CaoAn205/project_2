@@ -4,6 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.5.8'
 
 gem 'rails', '~> 6.1.0'
+gem 'active_model_serializers'
 gem 'mysql2', '~> 0.5'
 gem 'puma', '~> 5.0'
 gem 'sass-rails', '>= 6'
@@ -14,9 +15,12 @@ gem 'jquery-rails'
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'haml-rails', '~> 2.0'
 gem 'devise', '~> 4.8.1'
+gem 'devise_token_auth'
 gem 'carrierwave', '~> 2.0'
+gem 'rack-cors'
 gem 'rubyzip'
 gem 'rubyXL'
+# gem 'pycall'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
