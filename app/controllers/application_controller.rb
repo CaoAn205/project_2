@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActiveRecord::RecordNotFound, with: :render_404
 
-  protect_from_forgery with: :exception, if: :verify_api
+  protect_from_forgery prepend: true, with: :exception, if: :verify_api
 
   def authenticate_current_user
     head :unauthorized if current_user_get.nil?
@@ -45,7 +45,12 @@ class ApplicationController < ActionController::Base
   def render_404
     respond_to do |format|
       format.json do
-        render_not_found('Not Found')
+        render json: {
+          success: false,
+          error: {
+            message: "Something goes wrong or you have no permission to perform this"
+          }
+        }
       end
 
       format.any do
@@ -53,13 +58,6 @@ class ApplicationController < ActionController::Base
       end
     end
   end
-
-  protected
-
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:uid, :provider])
-  end
-
 
   private
 

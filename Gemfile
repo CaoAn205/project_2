@@ -20,7 +20,7 @@ gem 'carrierwave', '~> 2.0'
 gem 'rack-cors'
 gem 'rubyzip'
 gem 'rubyXL'
-# gem 'pycall'
+gem 'config'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
