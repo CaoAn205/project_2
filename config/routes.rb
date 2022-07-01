@@ -15,19 +15,23 @@ Rails.application.routes.draw do
         sessions: 'api/v1/sessions',
       }
 
-      resources :users, only: [:show, :update]
+      resources :users, only: [:index, :show]
 
       resources :datasets, only: [:index, :show] do
         resources :images, only: [:show]
       end
 
       namespace :admin do
-        resources :users, only: [:index, :create, :destroy]
+        resources :users, only: [:create, :destroy]
 
         resources :datasets, only: [:update, :destroy] do
           resources :labels, only: [:index, :create, :update]
         end
       end
+
+      get '/profile', to: 'profile#index'
+      put '/profile/password', to: 'profile#change_password'
+      put '/profile/update', to: 'profile#update'
     end
   end
 end
