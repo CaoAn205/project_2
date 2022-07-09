@@ -9,7 +9,7 @@ class User < ApplicationRecord
   attr_writer :login
 
   before_validation :set_provider
-  before_save :send_password_email, if: :new_record?
+  before_save :send_registration_password_email, if: :new_record?
 
   enum role_type: %i(admin user)
   has_many :images
@@ -30,8 +30,12 @@ class User < ApplicationRecord
     assign_attributes(password: new_password, password_confirmation: new_password)
   end
 
-  def send_password_email
+  def send_registration_password_email
     UserMailer.registration_email(email, password).deliver_later
+  end
+
+  def send_reset_password_email
+    UserMailer.reset_password(email, password).deliver_later
   end
 
   private

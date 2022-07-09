@@ -32,6 +32,8 @@ Rails.application.routes.draw do
       get '/profile', to: 'profile#index'
       put '/profile/password', to: 'profile#change_password'
       put '/profile/update', to: 'profile#update'
+
+      post "/reset_passwords", to: "reset_passwords#create"
     end
   end
 end
