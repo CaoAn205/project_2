@@ -21,6 +21,7 @@ gem 'rack-cors'
 gem 'rubyzip'
 gem 'rubyXL'
 gem 'config'
+gem 'rest-client'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

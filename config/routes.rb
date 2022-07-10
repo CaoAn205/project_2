@@ -18,7 +18,9 @@ Rails.application.routes.draw do
       resources :users, only: [:index, :show]
 
       resources :datasets, only: [:index, :show] do
-        resources :images, only: [:show]
+        resources :images, only: [:create, :show] do
+          resources :image_sectors, only: [:update]
+        end
       end
 
       namespace :admin do

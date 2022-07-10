@@ -1,1 +1,2 @@
 default_host: localhost:3000
+segnmentation_api: /index
