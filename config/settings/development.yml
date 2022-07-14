@@ -1,2 +1,2 @@
-default_host: localhost:3000
+default_host: http://127.0.0.1:3000
 segnmentation_api: /index
