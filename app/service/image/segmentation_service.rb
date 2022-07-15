@@ -19,7 +19,7 @@ class Image::SegmentationService
 
   attr_reader :image, :labels_indexes, :label_mapping
 
-  def call_segmentation_api api = "http://#{ENV['LOCAL_IPV4']}:8000#{Settings.segnmentation_api}"
+  def call_segmentation_api api = "http://#{ENV['LOCAL_IPV4']}:8000#{Settings.segnmentation_index_api}"
     response = RestClient.post(api, { :file => File.new(image.file.path, 'rb') })
     response.body
   end

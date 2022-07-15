@@ -26,7 +26,7 @@ class Api::V1::ImagesController < Api::V1::BaseController
     dataset = Dataset.find(params[:dataset_id])
     image = dataset.images.find(params[:id])
 
-    Image::SegmentationService.new(image).execute! if image.image_sectors.blank?
+    # Image::SegmentationService.new(image).execute! if image.image_sectors.blank?
 
     render json: {
       success: true,

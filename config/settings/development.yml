@@ -1,2 +1,3 @@
 default_host: http://127.0.0.1:3000
-segnmentation_api: /index
+segnmentation_index_api: /index
+segnmentation_image_api: /segmentation
