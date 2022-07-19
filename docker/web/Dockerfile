@@ -3,7 +3,7 @@ FROM ruby:2.5.8-alpine
 ENV LANG C.UTF-8
 
 ARG APP_ROOT=/workspace
-ARG BUILD_PACKAGES="build-base curl-dev ruby-dev"
+ARG BUILD_PACKAGES="build-base curl-dev ruby-dev imagemagick"
 ARG DEV_PACKAGES="mysql-client yaml-dev zlib-dev mysql-dev nodejs yarn postgresql-dev"
 ARG RUBY_PACKAGES="tzdata ruby-json yaml shared-mime-info"
 
