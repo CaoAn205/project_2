@@ -6,10 +6,14 @@ class Image < ApplicationRecord
   belongs_to :user
 
   has_many :image_sectors, dependent: :destroy
-  has_one :image_mask, dependent: :destroy
+  has_many :image_masks, dependent: :destroy
+
+  def lastest_mask
+    image_masks.order(created_at: :desc).first
+  end
 
   def segmentation_mask
-    return image_mask if image_mask&.file.present?
+    return lastest_mask if lastest_mask&.file.present?
 
     create_file_from_response
   end
@@ -33,7 +37,7 @@ class Image < ApplicationRecord
     mask_file = File.new(Rails.root.join(temp_path, "#{image_file_name}_mask#{image_file_extension}"), 'w')
     mask_file.syswrite(file_data)
 
-    mask = build_image_mask(file: mask_file)
+    mask = image_masks.new(file: mask_file)
     mask.save!
     mask
   ensure

@@ -10,7 +10,8 @@ class Api::V1::ProfileController < Api::V1::BaseController
     current_user.update!(profile_name_and_email_params)
 
     render json: {
-      success: true
+      success: true,
+      user: UserSerializer.new(current_user)
     }, status: :accepted
   end
 

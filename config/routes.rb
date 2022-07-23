@@ -17,9 +17,11 @@ Rails.application.routes.draw do
 
       resources :users, only: [:index, :show]
 
-      resources :datasets, only: [:index, :show] do
+      resources :datasets, only: [:index, :create, :show, :update] do
         resources :images, only: [:create, :show] do
           resources :image_sectors, only: [:update]
+
+          resource :image_masks, only: [:create, :update]
         end
       end
 

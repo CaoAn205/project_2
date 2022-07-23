@@ -2,10 +2,10 @@ require 'zip'
 
 class Dataset::ImportDatasetImagesService
   class << self
-    def import!(file_path, user)
+    def import!(file_path, user, name)
       return unless File.exists?(file_path)
 
-      dataset = Dataset.create!(name: 'Dataset 1')
+      dataset = Dataset.create!(name: name || "Dataset 1")
       extract_destination = extract_file(file_path, dataset.id)
 
       Dir.glob(Rails.root.join(extract_destination, 'images', '*')).each do |path|
@@ -16,7 +16,7 @@ class Dataset::ImportDatasetImagesService
 
       dataset
     ensure
-      FileUtils.rm_rf(extract_destination)
+      FileUtils.rm_rf(extract_destination) if extract_destination.present?
     end
 
     private
