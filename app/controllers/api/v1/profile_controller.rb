@@ -16,7 +16,11 @@ class Api::V1::ProfileController < Api::V1::BaseController
   end
 
   def change_password
-    current_user.update!(profile_password_params)
+    if current_user.valid_password?(params[:old_password])
+      current_user.update!(profile_password_params)
+    else
+      raise ActiveRecord::RecordNotFound
+    end
 
     render json: {
       success: true

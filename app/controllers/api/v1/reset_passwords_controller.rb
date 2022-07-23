@@ -10,6 +10,7 @@ class Api::V1::ResetPasswordsController < Api::V1::BaseController
 
     user.assign_auto_genterated_password
     user.send_reset_password_email
+    user.save!
 
     render json: {
       success: true
