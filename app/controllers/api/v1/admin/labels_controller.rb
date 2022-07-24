@@ -26,6 +26,9 @@ class Api::V1::Admin::LabelsController < Api::V1::Admin::BaseController
 
     render json: {
       success: true,
+      data: ActiveModel::Serializer::CollectionSerializer.new(
+        dataset.labels, serializer: LabelSerializer
+      )
     }, status: :accepted
   end
 
