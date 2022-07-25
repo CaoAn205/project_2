@@ -13,7 +13,10 @@ class Api::V1::Admin::DatasetsController < Api::V1::Admin::BaseController
     dataset.destroy!
 
     render json: {
-      success: true
+      success: true,
+      data: ActiveModel::Serializer::CollectionSerializer.new(
+        Dataset.order(created_at: :desc).all, serializer: DatasetSerializer
+      )
     }, status: :accepted
   end
 

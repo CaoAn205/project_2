@@ -15,7 +15,10 @@ class Api::V1::Admin::UsersController < Api::V1::Admin::BaseController
     user.destroy!
 
     render json: {
-      success: true
+      success: true,
+      data: ActiveModel::Serializer::CollectionSerializer.new(
+        User.order(created_at: :desc).all, serializer: UserSerializer
+      )
     }, status: :accepted
   end
 

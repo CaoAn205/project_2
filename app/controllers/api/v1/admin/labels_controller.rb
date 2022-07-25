@@ -5,7 +5,7 @@ class Api::V1::Admin::LabelsController < Api::V1::Admin::BaseController
     render json: {
       success: true,
       data: ActiveModel::Serializer::CollectionSerializer.new(
-        dataset.labels, serializer: LabelSerializer
+        dataset.labels.order(created_at: :desc), serializer: LabelSerializer
       )
     }
   end
@@ -21,13 +21,14 @@ class Api::V1::Admin::LabelsController < Api::V1::Admin::BaseController
   end
 
   def update
-    label = Dataset.find(params[:dataset_id]).labels.find(params[:id])
+    dataset = Dataset.find(params[:dataset_id])
+    label = dataset.labels.find(params[:id])
     label.update!(label_params)
 
     render json: {
       success: true,
       data: ActiveModel::Serializer::CollectionSerializer.new(
-        dataset.labels, serializer: LabelSerializer
+        dataset.labels.order(created_at: :desc), serializer: LabelSerializer
       )
     }, status: :accepted
   end

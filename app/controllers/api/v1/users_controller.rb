@@ -3,7 +3,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     render json: {
       success: true,
       data: ActiveModel::Serializer::CollectionSerializer.new(
-        User.all, serializer: UserSerializer
+        User.order(created_at: :desc).all, serializer: UserSerializer
       )
     }
   end

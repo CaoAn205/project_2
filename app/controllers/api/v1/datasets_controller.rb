@@ -3,7 +3,7 @@ class Api::V1::DatasetsController < Api::V1::BaseController
     render json: {
       success: true,
       data: ActiveModel::Serializer::CollectionSerializer.new(
-        Dataset.all, serializer: DatasetSerializer
+        Dataset.order(created_at: :desc).all, serializer: DatasetSerializer
       )
     }
   end
@@ -19,7 +19,7 @@ class Api::V1::DatasetsController < Api::V1::BaseController
 
   def show
     dataset = Dataset.find(params[:id])
-    images = dataset.images.includes(:image_sectors, :image_masks).page(params[:page])
+    images = dataset.images.order(created_at: :desc).includes(:image_sectors, :image_masks).page(params[:page])
 
     render json: {
       success: true,
